@@ -7,8 +7,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/51idc/service-monitor/apache-monitor/g"
-	"github.com/PuerkitoBio/goquery"
+	"github.com/freedomkk-qfeng/service-monitor/apache/g"
 	"github.com/open-falcon/common/model"
 )
 
@@ -24,25 +23,6 @@ func httpGet(url string) (string, int, error) {
 	}
 	defer resp.Body.Close()
 	return string(body), resp.StatusCode, err
-}
-
-func apache_version(url string) (string, error) {
-	resp, err := http.Get(url)
-	if err != nil {
-		return "", err
-	}
-	if resp.StatusCode != 200 {
-		return "", err
-	}
-
-	d, err := goquery.NewDocumentFromResponse(resp)
-	if err != nil {
-		return "", err
-	}
-	v := d.Find("dl").Eq(0).Find("dt").Eq(0).Text()
-	version := strings.Split(v, " ")[2]
-	defer resp.Body.Close()
-	return version, err
 }
 
 func apache_status(body string) (map[string]float64, error) {
@@ -91,20 +71,9 @@ func ApacheMetrics() (L []*model.MetricValue) {
 	url := g.Config().Apache.Staturl
 	url = strings.Split(url, "?")[0]
 	staturl := url + "?auto"
-	debug := g.Config().Debug
-	smartAPI_url := g.Config().SmartAPI.Url
-
-	if g.Config().SmartAPI.Enabled {
-		endpoint, err := g.Hostname()
-		version, err := apache_version(url)
-		if err == nil {
-			smartAPI_Push(smartAPI_url, endpoint, version, debug)
-		} else {
-			log.Println(err)
-		}
-	}
 
 	respbody, resp_code, err := httpGet(staturl)
+	L = append(L, GaugeValue("Apache.StatusCode", resp_code))
 	if err != nil {
 		log.Println(err)
 		return

@@ -3,8 +3,8 @@ package cron
 import (
 	"time"
 
-	"github.com/51idc/service-monitor/apache-monitor/funcs"
-	"github.com/51idc/service-monitor/apache-monitor/g"
+	"github.com/freedomkk-qfeng/service-monitor/apache/funcs"
+	"github.com/freedomkk-qfeng/service-monitor/apache/g"
 	"github.com/open-falcon/common/model"
 )
 

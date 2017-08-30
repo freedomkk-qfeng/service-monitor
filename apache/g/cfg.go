@@ -14,16 +14,11 @@ type ApacheConfig struct {
 	Staturl string `json:"staturl"`
 }
 
-type SmartAPIConfig struct {
-	Enabled bool   `json:"enabled"`
-	Url     string `json:"url"`
-}
-
 type TransferConfig struct {
-	Enabled  bool   `json:"enabled"`
+	Enabled  bool     `json:"enabled"`
 	Addrs    []string `json:"addrs"`
-	Interval int    `json:"interval"`
-	Timeout  int    `json:"timeout"`
+	Interval int      `json:"interval"`
+	Timeout  int      `json:"timeout"`
 }
 
 type HttpConfig struct {
@@ -35,9 +30,7 @@ type GlobalConfig struct {
 	Debug    bool            `json:"debug"`
 	Hostname string          `json:"hostname"`
 	Apache   *ApacheConfig   `json:"apache"`
-	SmartAPI *SmartAPIConfig `json:"smartAPI`
 	Transfer *TransferConfig `json:"transfer"`
-	Http     *HttpConfig     `json:"http"`
 }
 
 var (

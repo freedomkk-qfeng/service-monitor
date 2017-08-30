@@ -5,10 +5,6 @@
     "enabled": true,
     "staturl": "https://www.apache.org/server-status?auto"
   },
-  "smartAPI": {
-    "enabled": true,
-    "url": "http://127.0.0.1/api/service/version"
-  },
   "transfer": {
     "enabled": true,
     "addrs": [
