@@ -1,5 +1,5 @@
 {
-  "debug": true,
+  "debug": false,
   "hostname": "",
   "mongo": {
     "enabled": true,
@@ -11,10 +11,6 @@
       "Mongo.backgroundFlushing_flushes": true
     }
   },
-  "smartAPI": {
-    "enabled": true,
-    "url": "http://127.0.0.1/api/service/version"
-  },
   "transfer": {
     "enabled": true,
     "addrs": [
@@ -23,9 +19,5 @@
     ],
     "interval": 60,
     "timeout": 1000
-  },
-  "http": {
-    "enabled": true,
-    "listen": ":1990"
   }
 }
