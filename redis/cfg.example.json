@@ -1,5 +1,5 @@
 {
-  "debug": true,
+  "debug": false,
   "hostname": "",
   "redis": {
     "enabled": true,
@@ -7,13 +7,8 @@
     "password": "",
     "db": 0,
     "ignore": {
-      "Redis.loading": true,
-      "Redis.aof_enabled": true
+      "Redis.aof_enabled": true,
     }
-  },
-  "smartAPI": {
-    "enabled": true,
-    "url": "http://127.0.0.1/api/service/version"
   },
   "transfer": {
     "enabled": true,
@@ -23,9 +18,5 @@
     ],
     "interval": 60,
     "timeout": 1000
-  },
-  "http": {
-    "enabled": true,
-    "listen": ":1990"
   }
 }

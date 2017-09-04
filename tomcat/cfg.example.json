@@ -1,15 +1,11 @@
 {
-  "debug": true,
+  "debug": false,
   "hostname": "",
   "tomcat": {
     "enabled": true,
     "staturl": "http://127.0.0.1:8080/manager/status?XML=true",
     "username": "admin",
     "password": "manager"
-  },
-  "smartAPI": {
-    "enabled": true,
-    "url": "http://127.0.0.1/api/service/version"
   },
   "transfer": {
     "enabled": true,
@@ -19,9 +15,5 @@
     ],
     "interval": 60,
     "timeout": 1000
-  },
-  "http": {
-    "enabled": true,
-    "listen": ":1990"
   }
 }

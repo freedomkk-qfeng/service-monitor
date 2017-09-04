@@ -1,14 +1,10 @@
 {
-  "debug": true,
+  "debug": false,
   "hostname": "",
   "nginx": {
     "enabled": true,
     "staturl": "http://127.0.0.1/status",
     "pid": "/var/run/nginx.pid"
-  },
-  "smartAPI": {
-    "enabled": true,
-    "url": "http://127.0.0.1/api/service/version"
   },
   "transfer": {
     "enabled": true,
@@ -18,9 +14,5 @@
     ],
     "interval": 60,
     "timeout": 1000
-  },
-  "http": {
-    "enabled": true,
-    "listen": ":1990"
   }
 }

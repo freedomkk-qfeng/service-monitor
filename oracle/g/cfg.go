@@ -14,11 +14,6 @@ type DbConfig struct {
 	Timeout int    `json:"timeout`
 }
 
-type SmartAPIConfig struct {
-	Enabled bool   `json:"enabled"`
-	Url     string `json:"url"`
-}
-
 type TransferConfig struct {
 	Enabled  bool     `json:"enabled"`
 	Addrs    []string `json:"addrs"`
@@ -26,19 +21,12 @@ type TransferConfig struct {
 	Timeout  int      `json:"timeout"`
 }
 
-type HttpConfig struct {
-	Enabled bool   `json:"enabled"`
-	Listen  string `json:"listen"`
-}
-
 type GlobalConfig struct {
 	Debug    bool            `json:"debug"`
 	Hostname string          `json:"hostname"`
 	Logfile  string          `json:"logfile"`
 	Db       *DbConfig       `json:"db"`
-	SmartAPI *SmartAPIConfig `json:"smartAPI`
 	Transfer *TransferConfig `json:"transfer"`
-	Http     *HttpConfig     `json:"http"`
 }
 
 var (

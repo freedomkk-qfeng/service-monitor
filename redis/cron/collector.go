@@ -2,8 +2,9 @@ package cron
 
 import (
 	"time"
-	"github.com/51idc/service-monitor/redis-monitor/funcs"
-	"github.com/51idc/service-monitor/redis-monitor/g"
+
+	"github.com/freedomkk-qfeng/service-monitor/redis/funcs"
+	"github.com/freedomkk-qfeng/service-monitor/redis/g"
 	"github.com/open-falcon/common/model"
 )
 

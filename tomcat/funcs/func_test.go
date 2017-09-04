@@ -6,7 +6,6 @@ import (
 )
 
 const (
-	pushurl    = "http://127.0.0.1/api/sevice/version"
 	tomcat_url = "http://127.0.0.1:8080/manager/status/"
 	username   = "admin"
 	password   = "manager"
@@ -31,11 +30,4 @@ func Test_tomcat(t *testing.T) {
 		t.Log("uptime:", uptime)
 		t.Error(err)
 	}
-}
-
-func Test_smartAPI_Push(t *testing.T) {
-	endpoint := "test"
-	version := "1.1.1"
-	smartAPI_Push(pushurl, endpoint, version, true)
-
 }

@@ -2,10 +2,11 @@ package funcs
 
 import (
 	"database/sql"
+	"log"
 	"strings"
 	"time"
 
-	"github.com/51idc/service-monitor/oracle-monitor/g"
+	"github.com/freedomkk-qfeng/service-monitor/oracle/g"
 	"golang.org/x/net/context"
 
 	"github.com/open-falcon/common/model"
@@ -32,24 +33,20 @@ func oracleMetrics() (L []*model.MetricValue) {
 
 	db, err := oracle_conn(dsn)
 	if err != nil {
-		g.Logger().Println(err)
+		L = append(L, GaugeValue("Oracle.Alive", -1))
+		log.Println(err)
 		return
 	}
 	defer db.Close()
 
-	debug := g.Config().Debug
-	smartAPI_url := g.Config().SmartAPI.Url
-
-	if g.Config().SmartAPI.Enabled {
-		result, err := version_query(db, timeout)
-		endpoint, _ := g.Hostname()
-		if err == nil {
-			version := result
-			smartAPI_Push(smartAPI_url, endpoint, version, debug)
-		} else {
-			g.Logger().Println(err)
-		}
+	result, err := version_query(db, timeout)
+	if err == nil {
+		version := result
+		log.Println("Oracle version is ", version)
+	} else {
+		log.Println(err)
 	}
+
 	database, err := database_query(db, timeout)
 	instance, err := instance_query(db, timeout)
 	database_tag := ""
@@ -58,14 +55,14 @@ func oracleMetrics() (L []*model.MetricValue) {
 		database_tag = "database=" + database
 		instance_tag = "instance=" + instance
 	} else {
-		g.Logger().Println(err)
+		log.Println(err)
 	}
 
 	uptime, err := uptime_query(db, timeout)
 	if err == nil {
 		L = append(L, GaugeValue("Oracle.Uptime", uptime, database_tag, instance_tag))
 	} else {
-		g.Logger().Println(err)
+		log.Println(err)
 	}
 	tspaces, err := tablespace_query(db, timeout)
 	if err == nil {
@@ -74,7 +71,7 @@ func oracleMetrics() (L []*model.MetricValue) {
 			L = append(L, GaugeValue("Oracle.tablespace", tspace.USED_PERCENT, tspace_tag, database_tag, instance_tag))
 		}
 	} else {
-		g.Logger().Println(err)
+		log.Println(err)
 	}
 
 	smetrics, err := sysmetric_query(db, timeout)
@@ -83,7 +80,7 @@ func oracleMetrics() (L []*model.MetricValue) {
 			L = append(L, GaugeValue("Oracle.sysmetric."+smetric.METRIC_NAME, smetric.VALUE, database_tag, instance_tag))
 		}
 	} else {
-		g.Logger().Println(err)
+		log.Println(err)
 	}
 
 	wmetrics, err := waitmetric_query(db, timeout)
@@ -94,7 +91,7 @@ func oracleMetrics() (L []*model.MetricValue) {
 			L = append(L, GaugeValue("Oracle.waitmetric.avg_dbtime_wait_1m", wmetric.DBTIME_IN_WAIT, wmetric_tag, database_tag, instance_tag))
 		}
 	} else {
-		g.Logger().Println(err)
+		log.Println(err)
 	}
 
 	return

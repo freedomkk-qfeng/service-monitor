@@ -1,7 +1,7 @@
 package funcs
 
 import (
-	"github.com/51idc/service-monitor/redis-monitor/g"
+	"github.com/freedomkk-qfeng/service-monitor/redis/g"
 	"github.com/open-falcon/common/model"
 )
 
@@ -17,7 +17,6 @@ func BuildMappers() {
 	Mappers = []FuncsAndInterval{
 		FuncsAndInterval{
 			Fs: []func() []*model.MetricValue{
-				AgentMetrics,
 				RedisMetrics,
 			},
 			Interval: interval,

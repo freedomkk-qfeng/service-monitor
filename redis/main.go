@@ -5,10 +5,9 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/51idc/service-monitor/redis-monitor/cron"
-	"github.com/51idc/service-monitor/redis-monitor/funcs"
-	"github.com/51idc/service-monitor/redis-monitor/g"
-	"github.com/51idc/service-monitor/redis-monitor/http"
+	"github.com/freedomkk-qfeng/service-monitor/redis/cron"
+	"github.com/freedomkk-qfeng/service-monitor/redis/funcs"
+	"github.com/freedomkk-qfeng/service-monitor/redis/g"
 )
 
 func main() {
@@ -37,8 +36,6 @@ func main() {
 	funcs.BuildMappers()
 
 	cron.Collect()
-
-	go http.Start()
 
 	select {}
 

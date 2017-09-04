@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/51idc/service-monitor/redis-monitor/g"
+	"github.com/freedomkk-qfeng/service-monitor/redis/g"
 	"github.com/open-falcon/common/model"
 	"gopkg.in/redis.v4"
 )
@@ -48,26 +48,25 @@ func RedisMetrics() (L []*model.MetricValue) {
 	Addr := g.Config().Redis.Addr
 	Password := g.Config().Redis.Password
 	DB := g.Config().Redis.Db
+	Port := strings.Split(Addr, ":")[1]
 
 	info, err := GetRedisInfo(Addr, Password, DB)
 	if err != nil {
+		L = append(L, GaugeValue("Redis.Alive", -1, "Port="+Port))
 		log.Println("Redis Connect Error: ", err)
 		return
 	}
-	Port := strings.Split(Addr, ":")[1]
-	Redis_Info := Redis_Info_Map(info)
-	debug := g.Config().Debug
-	smartAPI_url := g.Config().SmartAPI.Url
 
-	if g.Config().SmartAPI.Enabled {
-		version := Redis_Info["redis_version"]
-		endpoint, err := g.Hostname()
-		if err == nil {
-			smartAPI_Push(smartAPI_url, endpoint, version, debug)
-		} else {
-			log.Println(err)
-		}
+	Redis_Info := Redis_Info_Map(info)
+
+	version := Redis_Info["redis_version"]
+
+	if err == nil {
+		log.Println("Redis version is: ", version)
+	} else {
+		log.Println(err)
 	}
+
 	for index, value := range Redis_Info {
 		if Type, ok := Mertics[index]; ok {
 			if index == "uptime_in_seconds" {

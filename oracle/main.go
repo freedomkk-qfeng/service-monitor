@@ -5,10 +5,9 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/51idc/service-monitor/oracle-monitor/cron"
-	"github.com/51idc/service-monitor/oracle-monitor/funcs"
-	"github.com/51idc/service-monitor/oracle-monitor/g"
-	"github.com/51idc/service-monitor/oracle-monitor/http"
+	"github.com/freedomkk-qfeng/service-monitor/oracle/cron"
+	"github.com/freedomkk-qfeng/service-monitor/oracle/funcs"
+	"github.com/freedomkk-qfeng/service-monitor/oracle/g"
 )
 
 func main() {
@@ -24,7 +23,7 @@ func main() {
 	}
 
 	g.ParseConfig(*cfg)
-	g.InitLog()
+
 	//g.InitRootDir()
 	//g.InitRpcClients()
 
@@ -36,8 +35,6 @@ func main() {
 	funcs.BuildMappers()
 
 	cron.Collect()
-
-	go http.Start()
 
 	select {}
 }

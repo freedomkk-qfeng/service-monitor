@@ -5,10 +5,9 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/51idc/service-monitor/nginx-monitor/cron"
-	"github.com/51idc/service-monitor/nginx-monitor/funcs"
-	"github.com/51idc/service-monitor/nginx-monitor/g"
-	"github.com/51idc/service-monitor/nginx-monitor/http"
+	"github.com/freedomkk-qfeng/service-monitor/nginx/cron"
+	"github.com/freedomkk-qfeng/service-monitor/nginx/funcs"
+	"github.com/freedomkk-qfeng/service-monitor/nginx/g"
 )
 
 func main() {
@@ -37,8 +36,6 @@ func main() {
 	funcs.BuildMappers()
 
 	cron.Collect()
-
-	go http.Start()
 
 	select {}
 

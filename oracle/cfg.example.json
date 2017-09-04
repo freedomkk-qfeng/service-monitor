@@ -1,15 +1,10 @@
 {
-  "debug": true,
-  "logfile": "oracle.log",
+  "debug": false,
   "hostname": "",
   "db": {
    	"dsn": "system/test@127.0.0.1:1521/orcl",
     "timeout": 5
    },
-  "smartAPI": {
-    "enabled": true,
-    "url": "http://127.0.0.1/api/service/version"
-  },
   "transfer": {
     "enabled": true,
     "addrs": [
@@ -18,9 +13,5 @@
     ],
     "interval": 60,
     "timeout": 1000
-  },
-  "http": {
-    "enabled": false,
-    "listen": ":1990"
   }
 }

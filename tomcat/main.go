@@ -5,10 +5,9 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/51idc/service-monitor/tomcat-monitor/cron"
-	"github.com/51idc/service-monitor/tomcat-monitor/funcs"
-	"github.com/51idc/service-monitor/tomcat-monitor/g"
-	"github.com/51idc/service-monitor/tomcat-monitor/http"
+	"github.com/freedomkk-qfeng/service-monitor/tomcat/cron"
+	"github.com/freedomkk-qfeng/service-monitor/tomcat/funcs"
+	"github.com/freedomkk-qfeng/service-monitor/tomcat/g"
 )
 
 func main() {
@@ -37,8 +36,6 @@ func main() {
 	funcs.BuildMappers()
 
 	cron.Collect()
-
-	go http.Start()
 
 	select {}
 

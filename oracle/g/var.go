@@ -2,7 +2,6 @@ package g
 
 import (
 	"log"
-	"os"
 	"time"
 
 	"math/rand"
@@ -14,22 +13,6 @@ import (
 var (
 	logger *log.Logger
 )
-
-func InitLog() {
-	fileName := Config().Logfile
-	logFile, err := os.Create(fileName)
-	if err != nil {
-		log.Fatalln("open file error !")
-	}
-	logger = log.New(logFile, "[Debug]", log.LstdFlags)
-	log.Println("logging on", fileName)
-}
-
-func Logger() *log.Logger {
-	lock.RLock()
-	defer lock.RUnlock()
-	return logger
-}
 
 var (
 	TransferClientsLock *sync.RWMutex                   = new(sync.RWMutex)
@@ -54,14 +37,14 @@ func SendToTransfer(metrics []*model.MetricValue) {
 
 	if debug {
 		for i, _ := range metrics {
-			Logger().Printf("=> <Total=%d> %v\n", len(metrics), metrics[i])
+			log.Printf("=> <Total=%d> %v\n", len(metrics), metrics[i])
 		}
 	}
 
 	var resp model.TransferResponse
 	SendMetrics(metrics, &resp)
 	if debug {
-		Logger().Println("<=", &resp)
+		log.Println("<=", &resp)
 	}
 }
 
@@ -83,7 +66,7 @@ func updateMetrics(addr string, metrics []*model.MetricValue, resp *model.Transf
 	defer TransferClientsLock.RUnlock()
 	err := TransferClients[addr].Call("Transfer.Update", metrics, resp)
 	if err != nil {
-		Logger().Println("call Transfer.Update fail", addr, err)
+		log.Println("call Transfer.Update fail", addr, err)
 		return false
 	}
 	return true

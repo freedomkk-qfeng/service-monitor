@@ -3,8 +3,8 @@ package cron
 import (
 	"time"
 
-	"github.com/51idc/service-monitor/tomcat-monitor/funcs"
-	"github.com/51idc/service-monitor/tomcat-monitor/g"
+	"github.com/freedomkk-qfeng/service-monitor/tomcat/funcs"
+	"github.com/freedomkk-qfeng/service-monitor/tomcat/g"
 	"github.com/open-falcon/common/model"
 )
 

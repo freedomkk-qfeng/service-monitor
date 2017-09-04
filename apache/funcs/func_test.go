@@ -6,7 +6,6 @@ import (
 )
 
 const (
-	pushurl    = "http://127.0.0.1/api/sevice/version"
 	apache_url = "https://www.apache.org/server-status?auto"
 )
 
@@ -24,11 +23,4 @@ func Test_apache(t *testing.T) {
 		t.Log("version:", version)
 		t.Error(err)
 	}
-}
-
-func Test_smartAPI_Push(t *testing.T) {
-	endpoint := "test"
-	version := "1.1.1"
-	smartAPI_Push(pushurl, endpoint, version, true)
-
 }

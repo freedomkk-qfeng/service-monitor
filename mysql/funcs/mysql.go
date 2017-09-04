@@ -5,7 +5,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/51idc/service-monitor/mysql-monitor/g"
+	"github.com/freedomkk-qfeng/service-monitor/mysql/g"
 	"github.com/open-falcon/common/model"
 	"github.com/ziutek/mymysql/mysql"
 	_ "github.com/ziutek/mymysql/native"
@@ -68,9 +68,7 @@ func MysqlMetrics() (L []*model.MetricValue) {
 	Port := g.Config().Mysql.Port
 	Username := g.Config().Mysql.Username
 	Password := g.Config().Mysql.Password
-
 	debug := g.Config().Debug
-	smartAPI_url := g.Config().SmartAPI.Url
 
 	m := &MysqlIns{
 		Host: Addr,
@@ -78,15 +76,13 @@ func MysqlMetrics() (L []*model.MetricValue) {
 		Tag:  fmt.Sprintf("port=%d", Port),
 	}
 
-	if g.Config().SmartAPI.Enabled {
-		endpoint, err := g.Hostname()
-		version, err := MysqlVersion(m, Username, Password)
-		if err == nil {
-			smartAPI_Push(smartAPI_url, endpoint, version, debug)
-		} else {
-			log.Println(err)
-		}
+	version, err := MysqlVersion(m, Username, Password)
+	if err == nil {
+		log.Println("Mysql version is: ", version)
+	} else {
+		log.Println(err)
 	}
+
 	data, err := MysqlStatus(m, Username, Password)
 	if err != nil {
 		L = append(L, GaugeValue("mysql_alive_local", -1, m.Tag))

@@ -11,7 +11,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/51idc/service-monitor/nginx-monitor/g"
+	"github.com/freedomkk-qfeng/service-monitor/nginx/g"
 	"github.com/open-falcon/common/model"
 	"github.com/toolkits/file"
 )
@@ -117,17 +117,12 @@ func NginxMetrics() (L []*model.MetricValue) {
 	}
 	url := g.Config().Nginx.Staturl
 	pid := g.Config().Nginx.Pid
-	debug := g.Config().Debug
-	smartAPI_url := g.Config().SmartAPI.Url
 
-	if g.Config().SmartAPI.Enabled {
-		endpoint, err := g.Hostname()
-		version, err := nginx_version()
-		if err == nil {
-			smartAPI_Push(smartAPI_url, endpoint, version, debug)
-		} else {
-			log.Println(err)
-		}
+	version, err := nginx_version()
+	if err == nil {
+		log.Println("Nginx version is: ", version)
+	} else {
+		log.Println(err)
 	}
 
 	uptime, err := pid_uptime(pid)
@@ -138,6 +133,7 @@ func NginxMetrics() (L []*model.MetricValue) {
 	}
 
 	respbody, resp_code, err := httpGet(url)
+	L = append(L, GaugeValue("Nginx.StatusCode", resp_code))
 	if err != nil {
 		log.Println(err)
 		return

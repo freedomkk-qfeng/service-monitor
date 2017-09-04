@@ -1,7 +1,7 @@
 package funcs
 
 import (
-	"github.com/51idc/service-monitor/oracle-monitor/g"
+	"github.com/freedomkk-qfeng/service-monitor/oracle/g"
 	"github.com/open-falcon/common/model"
 )
 
@@ -17,7 +17,6 @@ func BuildMappers() {
 	Mappers = []FuncsAndInterval{
 		FuncsAndInterval{
 			Fs: []func() []*model.MetricValue{
-				AgentMetrics,
 				oracleMetrics,
 			},
 			Interval: interval,

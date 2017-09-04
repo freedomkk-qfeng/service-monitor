@@ -10,8 +10,9 @@ import (
 
 	"github.com/PuerkitoBio/goquery"
 
-	"github.com/51idc/service-monitor/tomcat-monitor/g"
-	"github.com/open-falcon/common/model")
+	"github.com/freedomkk-qfeng/service-monitor/tomcat/g"
+	"github.com/open-falcon/common/model"
+)
 
 type Tomcat struct {
 	Jvm       Jvm         `xml:"jvm"`
@@ -158,17 +159,12 @@ func TomcatMetrics() (L []*model.MetricValue) {
 	url = strings.Split(url, "?")[0]
 	staturl := url + "?XML=true"
 	statallurl := url + "/all"
-	debug := g.Config().Debug
-	smartAPI_url := g.Config().SmartAPI.Url
 
-	if g.Config().SmartAPI.Enabled {
-		endpoint, err := g.Hostname()
-		version, err := tomcat_version(username, password, url)
-		if err == nil {
-			smartAPI_Push(smartAPI_url, endpoint, version, debug)
-		} else {
-			log.Println(err)
-		}
+	version, err := tomcat_version(username, password, url)
+	if err == nil {
+		log.Println("Tomcat version is: ", version)
+	} else {
+		log.Println(err)
 	}
 
 	uptime, err := tomcat_uptime(username, password, statallurl)
@@ -179,6 +175,7 @@ func TomcatMetrics() (L []*model.MetricValue) {
 	}
 
 	respbody, resp_code, err := TomcathttpGet(username, password, staturl)
+	L = append(L, GaugeValue("Tomcat.StatusCode", resp_code))
 	if err != nil {
 		log.Println(err)
 		return

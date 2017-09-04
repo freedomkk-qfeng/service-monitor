@@ -3,8 +3,8 @@ package cron
 import (
 	"time"
 
-	"github.com/51idc/service-monitor/oracle-monitor/funcs"
-	"github.com/51idc/service-monitor/oracle-monitor/g"
+	"github.com/freedomkk-qfeng/service-monitor/oracle/funcs"
+	"github.com/freedomkk-qfeng/service-monitor/oracle/g"
 	"github.com/open-falcon/common/model"
 )
 
